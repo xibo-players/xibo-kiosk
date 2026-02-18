@@ -1,0 +1,6 @@
+enable xibo-kiosk-firstboot.service
+enable xibo-kiosk-update.timer
+enable gdm.service
+enable avahi-daemon.service
+enable systemd-repart.service
+enable keyd.service

@@ -1,0 +1,5 @@
+[arexibo]
+name=Arexibo
+baseurl=https://xibo-players.github.io/xiboplayer-ghpages/rpm/fedora/$releasever/$basearch/
+enabled=1
+gpgcheck=0
