@@ -8,6 +8,7 @@ URL:            https://github.com/xibo-players/xibo-kiosk
 Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
+BuildRequires:  systemd-rpm-macros
 
 Requires:       gnome-kiosk-script-session
 Requires:       dunst
@@ -69,7 +70,7 @@ install -m755 kiosk/gnome-kiosk-script.sh %{buildroot}%{_sysconfdir}/skel/.local
 %{_sysconfdir}/skel/.local/bin/gnome-kiosk-script
 
 %changelog
-* Tue Feb 18 2026 Pau Aliagas <linuxnow@gmail.com> - 1.0.0-1
+* Wed Feb 18 2026 Pau Aliagas <linuxnow@gmail.com> - 1.0.0-1
 - Initial standalone xibo-kiosk package
 - Separated from arexibo repository for independent versioning
 - Player binary managed via alternatives system (/usr/bin/xiboplayer)
