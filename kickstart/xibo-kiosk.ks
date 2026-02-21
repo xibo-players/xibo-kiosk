@@ -86,55 +86,25 @@ dnf install -y \
 dnf swap -y ffmpeg-free ffmpeg --allowerasing || true
 %end
 
-# Install xibo-kiosk and player packages from gh-pages repositories
+# Install xibo-kiosk and player packages from central package portal
 %post --erroronfail
-# Add xibo-kiosk repository
-cat > /etc/yum.repos.d/xibo-kiosk.repo << 'EOF'
-[xibo-kiosk]
-name=Xibo Kiosk Session Scripts
-baseurl=https://xibo-players.github.io/xibo-kiosk/rpm/fedora/$releasever/$basearch/
+# Add xiboplayer repository (hosts all packages: xibo-kiosk, xiboplayer-electron,
+# xiboplayer-chromium, arexibo)
+cat > /etc/yum.repos.d/xiboplayer.repo << 'EOF'
+[xiboplayer]
+name=Xibo Players
+baseurl=https://dnf.xiboplayer.org/rpm/fedora/$releasever/$basearch/
 enabled=1
 gpgcheck=0
 EOF
 
-# Add xiboplayer-electron repository (default player)
-cat > /etc/yum.repos.d/xiboplayer-electron.repo << 'EOF'
-[xiboplayer-electron]
-name=Xibo Player - Electron
-baseurl=https://xibo-players.github.io/xiboplayer-electron/rpm/fedora/$releasever/$basearch/
-enabled=1
-gpgcheck=0
-EOF
-
-# Add xiboplayer-chromium repository
-cat > /etc/yum.repos.d/xiboplayer-chromium.repo << 'EOF'
-[xiboplayer-chromium]
-name=Xibo Player - Chromium Kiosk
-baseurl=https://xibo-players.github.io/xiboplayer-chromium/rpm/fedora/$releasever/$basearch/
-enabled=1
-gpgcheck=0
-EOF
-
-# Add arexibo repository
-cat > /etc/yum.repos.d/arexibo.repo << 'EOF'
-[arexibo]
-name=Arexibo Digital Signage Player
-baseurl=https://linuxnow.github.io/arexibo/rpm/fedora/$releasever/$basearch/
-enabled=1
-gpgcheck=0
-EOF
-
-# Install xibo-kiosk and xiboplayer-electron (default player)
-# To use a different player, replace xiboplayer-electron with:
-#   xiboplayer-chromium  — Chromium kiosk wrapper
-#   arexibo              — Rust-based native player
-dnf install -y xibo-kiosk xiboplayer-electron
+# Install all available players
+dnf install -y xibo-kiosk xiboplayer-electron xiboplayer-chromium arexibo
 
 # Register players via alternatives (highest priority = default)
 alternatives --install /usr/bin/xiboplayer xiboplayer /usr/bin/xiboplayer-electron 30
-# Uncomment to install additional players:
-# dnf install -y xiboplayer-chromium && alternatives --install /usr/bin/xiboplayer xiboplayer /usr/bin/xiboplayer-chromium 20
-# dnf install -y arexibo && alternatives --install /usr/bin/xiboplayer xiboplayer /usr/bin/arexibo 10
+alternatives --install /usr/bin/xiboplayer xiboplayer /usr/bin/xiboplayer-chromium 20
+alternatives --install /usr/bin/xiboplayer xiboplayer /usr/bin/arexibo 10
 %end
 
 # Configure xibo user and directories
@@ -182,6 +152,7 @@ EOF
 cat > /etc/doas.conf << 'EOF'
 permit nopass xibo cmd reboot
 permit nopass xibo cmd shutdown
+permit nopass xibo cmd alternatives
 EOF
 chmod 600 /etc/doas.conf
 %end
