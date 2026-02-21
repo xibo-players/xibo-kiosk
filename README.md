@@ -37,7 +37,7 @@ sudo alternatives --config xiboplayer
 ### Fedora (RPM)
 
 ```bash
-sudo dnf config-manager addrepo --from-repofile=https://xibo-players.github.io/xibo-kiosk/rpm/fedora/43/xibo-kiosk.repo
+sudo dnf config-manager addrepo --from-repofile=https://dnf.xiboplayer.org/rpm/fedora/43/xiboplayer.repo
 sudo dnf install xibo-kiosk
 
 # Install a player (pick one)
@@ -49,10 +49,10 @@ sudo dnf install arexibo              # Rust-based native player
 ### Ubuntu/Debian (DEB)
 
 ```bash
-curl -fsSL https://xibo-players.github.io/xibo-kiosk/deb/DEB-GPG-KEY-xibo-kiosk.asc | \
-  sudo gpg --dearmor -o /usr/share/keyrings/xibo-kiosk.gpg
-echo "deb [signed-by=/usr/share/keyrings/xibo-kiosk.gpg] https://xibo-players.github.io/xibo-kiosk/deb/ubuntu/24.04 ./" | \
-  sudo tee /etc/apt/sources.list.d/xibo-kiosk.list
+curl -fsSL https://dnf.xiboplayer.org/deb/DEB-GPG-KEY-xiboplayer.asc | \
+  sudo gpg --dearmor -o /usr/share/keyrings/xiboplayer.gpg
+echo "deb [signed-by=/usr/share/keyrings/xiboplayer.gpg] https://dnf.xiboplayer.org/deb/ubuntu/24.04 ./" | \
+  sudo tee /etc/apt/sources.list.d/xiboplayer.list
 sudo apt update && sudo apt install xibo-kiosk
 ```
 
