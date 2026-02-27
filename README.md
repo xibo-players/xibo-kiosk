@@ -37,7 +37,8 @@ sudo alternatives --config xiboplayer
 ### Fedora (RPM)
 
 ```bash
-sudo dnf config-manager addrepo --from-repofile=https://dl.xiboplayer.org/rpm/fedora/43/xiboplayer.repo
+sudo dnf install \
+  https://github.com/xibo-players/xibo-players.github.io/releases/download/v43-5/xiboplayer-release-43-5.noarch.rpm
 sudo dnf install xiboplayer-kiosk
 
 # Install a player (pick one)
